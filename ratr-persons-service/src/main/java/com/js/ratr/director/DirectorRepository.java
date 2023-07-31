@@ -1,4 +1,4 @@
-package com.js.ratr.director;
+package com.js.ratr.people;
 
 import com.js.ratr.model.Person;
 import org.springframework.data.repository.CrudRepository;

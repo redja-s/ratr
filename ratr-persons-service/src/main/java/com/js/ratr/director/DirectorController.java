@@ -1,4 +1,4 @@
-package com.js.ratr.director;
+package com.js.ratr.people;
 
 import com.js.ratr.model.Film;
 import org.springframework.web.bind.annotation.*;
