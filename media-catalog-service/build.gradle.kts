@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-	implementation(files("/home/jared/code/ratr/shared-lib/lib/build/libs/lib-plain.jar"))
+	implementation(files("/home/jared/Documents/code/ratr/shared-lib/lib/build/libs/lib-plain.jar"))
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
