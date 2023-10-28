@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/ratr.iml" filepath="$PROJECT_DIR$/.idea/ratr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ratr-media-catalog-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ratr-media-catalog-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ratr-media-catalog-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ratr-media-catalog-service.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/shared-lib.lib.main.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/shared-lib.lib.main.iml" />
+    </modules>
+  </component>
+</project>
