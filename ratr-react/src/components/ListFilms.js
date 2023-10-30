@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const FilmList = () => {
+const ListFilms = () => {
   const [films, setFilms] = useState([]);
 
   useEffect(() => {
@@ -17,8 +17,8 @@ const FilmList = () => {
       <ul>
         {films.map((film) => (
           <li key={film.id}>
-            {film.title} (Director: {film.director}, UK Release Date:{" "}
-            {film.uk_release_date})
+            {film.title} (Director: {film.director_name}, UK Release Date:{" "}
+            {film.release_year})
           </li>
         ))}
       </ul>
@@ -26,4 +26,4 @@ const FilmList = () => {
   );
 };
 
-export default FilmList;
+export default ListFilms;

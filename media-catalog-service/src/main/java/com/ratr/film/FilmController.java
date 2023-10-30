@@ -1,11 +1,12 @@
 package com.ratr.film;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ratr.model.Film;
 import com.ratr.people.PeopleRepository;
 import lombok.Data;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,12 +15,31 @@ import java.util.List;
 @Data
 public class FilmController {
 
-    private final FilmRepository filmRepository;
-    private final PeopleRepository peopleRepository;
+    private FilmRepository filmRepository;
+    private PeopleRepository peopleRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    public FilmController(FilmRepository filmRepository, PeopleRepository peopleRepository) {
+        this.filmRepository = filmRepository;
+        this.peopleRepository = peopleRepository;
+    }
 
     @GetMapping("/films")
-    public List<Film> getAllFilms() {
-        return filmRepository.findAll();
+    public String getAllFilms() throws JsonProcessingException {
+
+        List<Film> allFilms = filmRepository.findAll();
+        return objectMapper.writeValueAsString(allFilms);
+    }
+
+    @GetMapping("/films/director/{directorName}")
+    public String getFilmsByDirector(@PathVariable String directorName) throws JsonProcessingException {
+        directorName = directorName.replace("%20", " ");
+        List<String> filmsByDirector = filmRepository.findByDirectorName(directorName);
+
+        return objectMapper.writeValueAsString(filmsByDirector);
     }
 
     // @GetMapping("/films/{id}")
@@ -28,19 +48,10 @@ public class FilmController {
     //     return film.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     // }
 
-    // @PostMapping("/films")
-    // public Film createFilm(@RequestBody Film film) {
-    //     String directorName = film.getDirector().getName();
-    //     LocalDate directorDob = film.getDirector().getDateOfBirth();
-    //     Optional<Person> directorOptional = peopleRepository.findByNameAndDateOfBirth(directorName, directorDob);
-
-    //     if (directorOptional.isPresent()) {
-    //         Person director = directorOptional.get();
-    //         film.getDirector().setId(director.getId());
-    //     }
-
-    //     return filmRepository.save(film);
-    // }
+     @PostMapping("/films")
+     public Film createFilm(@RequestBody Film film) {
+         return filmRepository.save(film);
+     }
 
     // @PutMapping("/films/{id}")
     // public ResponseEntity<Film> updateFilm(@PathVariable UUID id, @RequestBody Film updatedFilm) {

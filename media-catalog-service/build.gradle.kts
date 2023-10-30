@@ -25,6 +25,8 @@ dependencies {
 	implementation("org.postgresql:postgresql")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.jetbrains:annotations:24.0.0")
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.15.3")
+
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

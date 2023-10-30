@@ -1,13 +1,13 @@
 // src/App.js
 import React from "react";
-import FilmList from "./components/FilmList";
-import FilmForm from "./components/FilmForm";
+import ListFilms from "./components/ListFilms";
+import CreateFilm from "./components/CreateFilm";
 
 function App() {
   return (
     <div>
-      <FilmList />
-      <FilmForm />
+      <CreateFilm />
+      <ListFilms />
     </div>
   );
 }
