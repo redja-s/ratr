@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS films (
     director_name VARCHAR NOT NULL,
     release_year INT NOT NULL,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE(title, director_name, release_year)
 );
 
 INSERT INTO films (title, director_name, release_year)

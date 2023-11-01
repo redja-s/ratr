@@ -45,7 +45,7 @@ class CreateFilm extends Component {
   render() {
     return (
       <div>
-        <h2>Create Film</h2>
+        <h2 className="text-9xl te-">Create Film</h2>
         <form onSubmit={this.handleFormSubmit}>
           <div>
             <label>Title:</label>
