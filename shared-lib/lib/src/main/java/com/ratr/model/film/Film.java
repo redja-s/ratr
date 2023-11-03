@@ -1,7 +1,6 @@
 package com.ratr.model.film;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ratr.model.genre.GenreEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +39,7 @@ public class Film {
     @Column(name = "release_year")
     @JsonProperty("release_year")
     @NotNull
-    private int releaseDate;
+    private int releaseYear;
 
     @NotNull
     private String description;
@@ -48,12 +47,4 @@ public class Film {
     @JsonProperty("cover_image_path")
     @Column(name = "cover_image_path")
     private String coverImagePath;
-
-    @ManyToMany
-    @JoinTable(
-            name = "film_genres",
-            joinColumns = @JoinColumn(name = "film_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
-    private Set<GenreEnum> genres;
 }

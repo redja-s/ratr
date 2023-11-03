@@ -1,4 +1,4 @@
-package com.ratr.model.genre;
+package com.ratr.model.film;
 
 public enum GenreEnum {
     ACTION("Action"),

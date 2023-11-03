@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS genres (
 );
 
 CREATE TABLE IF NOT EXISTS films_genres (
-    film_id INTEGER REFERENCES films(id),
-    genre_id INTEGER REFERENCES genres(id),
+    film_id UUID REFERENCES films(id),
+    genre_id serial REFERENCES genres(id),
 
     PRIMARY KEY (film_id, genre_id)
 );
@@ -50,3 +50,9 @@ VALUES
     ('Interstellar', 'Christopher Nolan', 2014, 'When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.')
     ;
 
+INSERT INTO films_genres (film_id, genre_id)
+VALUES
+    ((SELECT id FROM films WHERE title = '500 Days of Summer' AND release_year = 2009),
+     (SELECT id FROM genres WHERE genre = 'Romance')),
+     ((SELECT id FROM films WHERE title = '500 Days of Summer' AND release_year = 2009),
+      (SELECT id FROM genres WHERE genre = 'Comedy'));

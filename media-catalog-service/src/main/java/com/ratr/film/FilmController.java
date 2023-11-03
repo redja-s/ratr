@@ -42,11 +42,14 @@ public class FilmController {
         return objectMapper.writeValueAsString(filmsByDirector);
     }
 
-    // @GetMapping("/films/{id}")
-    // public ResponseEntity<Film> getFilmById(@PathVariable UUID id) {
-    //     Optional<Film> film = filmRepository.findById(id);
-    //     return film.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    // }
+    @GetMapping("/films/ids")
+    public String getFilmIdByTitleDirectorAndReleaseYear(String title, String directorName, int releaseYear) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(
+                filmRepository.getFilmIdByTitleDirectorAndReleaseYear(
+                        title, directorName, releaseYear
+                )
+        );
+    }
 
      @PostMapping("/films")
      public Film createFilm(@RequestBody Film film) {

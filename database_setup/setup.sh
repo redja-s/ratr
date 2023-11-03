@@ -2,12 +2,12 @@
 
 set -e
 
-if [[ !(-f "Dockerfile") ]]; then
+if [[ ! (-f "Dockerfile") ]]; then
     echo "No Dockerfile found in working directory"
     exit
 fi
 
-if [[ !(-d "scripts/") ]]; then
+if [[ ! (-d "scripts/") ]]; then
     echo "No 'scripts/' directory found in working directory"
     exit
 fi
