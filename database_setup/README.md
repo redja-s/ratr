@@ -9,3 +9,5 @@ Set up the database connection parameters in `application.properties`
 - DB Name: `postgres`
 - DB Username: `user`
 - DB Password: `password`
+
+TODO :: Docker compose for dockerfile rather than bash script.

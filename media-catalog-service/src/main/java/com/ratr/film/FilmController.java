@@ -3,7 +3,6 @@ package com.ratr.film;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ratr.model.film.Film;
-import com.ratr.people.PeopleRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +15,17 @@ import java.util.List;
 public class FilmController {
 
     private FilmRepository filmRepository;
-    private PeopleRepository peopleRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    public FilmController(FilmRepository filmRepository, PeopleRepository peopleRepository) {
+    public FilmController(FilmRepository filmRepository) {
         this.filmRepository = filmRepository;
-        this.peopleRepository = peopleRepository;
     }
 
     @GetMapping("/films")
     public String getAllFilms() throws JsonProcessingException {
-
         List<Film> allFilms = filmRepository.findAll();
         return objectMapper.writeValueAsString(allFilms);
     }
@@ -42,14 +38,14 @@ public class FilmController {
         return objectMapper.writeValueAsString(filmsByDirector);
     }
 
-    @GetMapping("/films/ids")
-    public String getFilmIdByTitleDirectorAndReleaseYear(String title, String directorName, int releaseYear) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(
-                filmRepository.getFilmIdByTitleDirectorAndReleaseYear(
-                        title, directorName, releaseYear
-                )
-        );
-    }
+//    @GetMapping("/films/ids")
+//    public String getFilmIdByTitleDirectorAndReleaseYear(String title, String directorName, int releaseYear) throws JsonProcessingException {
+//        return objectMapper.writeValueAsString(
+//                filmRepository.getFilmIdByTitleDirectorAndReleaseYear(
+//                        title, directorName, releaseYear
+//                )
+//        );
+//    }
 
      @PostMapping("/films")
      public Film createFilm(@RequestBody Film film) {

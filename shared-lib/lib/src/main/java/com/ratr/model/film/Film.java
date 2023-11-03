@@ -5,21 +5,19 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Data
 @Table(name = "films")
-@Builder
+@NoArgsConstructor
 public class Film {
 
     @Id
@@ -47,4 +45,5 @@ public class Film {
     @JsonProperty("cover_image_path")
     @Column(name = "cover_image_path")
     private String coverImagePath;
+
 }

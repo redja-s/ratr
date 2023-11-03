@@ -6,17 +6,17 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
-@Entity
-@Table(name = "genres", uniqueConstraints = @UniqueConstraint(columnNames = "genre"))
-@Builder
-public class Genre {
-    @Id
-    @GeneratedValue
-    private int id;
-
-    @Enumerated(EnumType.STRING)
-    private GenreEnum genre;
-}
+//@Entity
+//@Table(name = "genres")
+//@Builder
+//public class Genre {
+//    @Id
+//    @GeneratedValue
+//    private int id;
+//
+//    @NotNull
+//    private String genre;
+//}

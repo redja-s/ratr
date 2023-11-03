@@ -11,10 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity
-@Table(name = "people", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "date_of_birth"}))
-@NoArgsConstructor
-@Data
+//@Entity
+//@Table(name = "people", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "date_of_birth"}))
+//@NoArgsConstructor
+//@Data
 public class Person {
 
     @Id

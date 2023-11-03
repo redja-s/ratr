@@ -32,10 +32,10 @@ sleep 4
 
 echo
 echo "Running SQL scripts against database..."
-for file in scripts/*.sql; do
-    echo "Executing '$file'..."
-    docker exec $PSQL_CONTAINER_NAME psql -d postgres -U user -f /sql_scripts/$(basename "$file")
-done
+
+# Run schema script first
+docker exec $PSQL_CONTAINER_NAME psql -d postgres -U user -f /sql_scripts/schema.sql
+docker exec $PSQL_CONTAINER_NAME psql -d postgres -U user -f /sql_scripts/data.sql
 
 echo
 echo "Database setup is done."
