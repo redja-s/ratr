@@ -2,11 +2,19 @@ package com.ratr.film;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ratr.model.GenericJsonResponse;
 import com.ratr.model.film.Film;
+import jakarta.validation.ConstraintViolationException;
 import lombok.Data;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,10 +32,20 @@ public class FilmController {
         this.filmRepository = filmRepository;
     }
 
+    @GetMapping("/films/{filmTitle}")
+    public ResponseEntity<List<Film>> getFilmsWithTitle(@PathVariable String filmTitle) {
+        return ResponseEntity.ok(filmRepository.findFilmsByTitle(filmTitle));
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Endpoint working fine!");
+    }
+
     @GetMapping("/films")
-    public String getAllFilms() throws JsonProcessingException {
+    public ResponseEntity<List<Film>> getAllFilms() throws JsonProcessingException {
         List<Film> allFilms = filmRepository.findAll();
-        return objectMapper.writeValueAsString(allFilms);
+        return ResponseEntity.ok(allFilms);
     }
 
     @GetMapping("/films/director/{directorName}")
@@ -48,8 +66,24 @@ public class FilmController {
 //    }
 
      @PostMapping("/films")
-     public Film createFilm(@RequestBody Film film) {
-        return filmRepository.save(film);
+     public ResponseEntity<?> createFilm(@RequestBody Film film) {
+        try {
+            Film newFilm = filmRepository.save(film);
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(newFilm.getId())
+                    .toUri();
+
+            return ResponseEntity.created(location).body(newFilm);
+        } catch (DataIntegrityViolationException e) {
+            GenericJsonResponse response = GenericJsonResponse.builder()
+                    .message("Film already exists!")
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(response);
+         }
      }
 
     // @PutMapping("/films/{id}")
