@@ -1,7 +1,6 @@
 package com.ratr.film;
 
-import com.ratr.model.Film;
-import jakarta.persistence.Entity;
+import com.ratr.model.film.Film;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +14,6 @@ public interface FilmRepository extends JpaRepository<Film, UUID> {
 
     @Query("SELECT f.title FROM Film f WHERE f.directorName = :dname")
     List<String> findByDirectorName(@Param("dname") String directorName);
+
+    @Query("SELECT f.")
 }
