@@ -1,0 +1,7 @@
+services:
+#  Build the image
+  postgres-db:
+    build: .
+    container_name: ratr-psql
+    ports:
+      - "5432:5432"

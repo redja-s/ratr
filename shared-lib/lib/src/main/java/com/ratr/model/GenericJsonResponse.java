@@ -1,10 +1,10 @@
 package com.ratr.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 
-@AllArgsConstructor
 @Builder
+@Data
 public class GenericJsonResponse {
     private String message;
 }

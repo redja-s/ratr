@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./gradlew jar
+./gradlew clean jar

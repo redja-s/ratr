@@ -20,13 +20,10 @@ public interface FilmRepository extends JpaRepository<Film, UUID> {
     @Query("SELECT f FROM Film f WHERE f.title = :ftitle")
     List<Film> findFilmsByTitle(@Param("ftitle") String filmTitle);
 
-//    @Query("SELECT g.genre FROM Film f INNER JOIN FilmGenre fg on f.id = fg.filmId INNER JOIN Genre g on fg.genreId = g.id WHERE f.id = :fid ")
-//    List<GenreEnum> findGenresForFilmById(@Param("fid") String filmId);
-//
-//    @Query("SELECT f.id FROM films WHERE f.title = :ftitle AND f.directorName = :fdirector AND f.releaseYear = :freleaseyear")
-//    String getFilmIdByTitleDirectorAndReleaseYear(
-//            @Param("ftitle") String title,
-//            @Param("fdirector") String directorName,
-//            @Param("freleaseyear") int releaseYear
-//    );
+    @Query("SELECT f.id FROM Film f WHERE f.title = :ftitle AND f.directorName = :fdirector AND f.releaseYear = :freleaseyear")
+    String getFilmIdByTitleDirectorAndReleaseYear(
+            @Param("ftitle") String title,
+            @Param("fdirector") String directorName,
+            @Param("freleaseyear") int releaseYear
+    );
 }
