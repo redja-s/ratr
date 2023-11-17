@@ -10,4 +10,11 @@ Set up the database connection parameters in `application.properties`
 - DB Username: `user`
 - DB Password: `password`
 
-TODO :: Docker compose for dockerfile rather than bash script.
+## Usage
+Run:
+
+```shell
+docker compose up --build -d
+```
+
+Ensure you use `--build` so any changes to SQL scripts are always taken into effect. Running this flag ensure the image is rebuilt
