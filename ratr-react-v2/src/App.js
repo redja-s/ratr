@@ -1,20 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
-import ListFilms from "./components/ListFilms.js";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from "./components/Header.js";
+
+import Home from './pages/Home.js'
+import Films from './pages/Films.js'
+import Error from './pages/Error.js'
+
 
 function App() {
   return (
-    <div className = "mt-5 container-fluid">
-          <Header />
-      <div className = "card">
+    <Router>
+        <Header />
+        <Routes>
+            <Route exact path='/' exact component={Home}/>
+            <Route exact path='/films' exact component={Films}/>
 
-        <div className = "card-header">
-        List of Films
-        </div>
-        <ListFilms />
-      </div>
-    </div>
+        </Routes>
+    </Router>
   );
 }
 

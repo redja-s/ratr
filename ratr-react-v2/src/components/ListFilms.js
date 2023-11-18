@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import FilmTable from "./FilmTable.js";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import FilmTable from "./FilmTable";
+import FilmView from "./FilmView";
+
 
 const ListFilms = () => {
 
   return (
-    <div className="card-body">
-        <FilmTable />
-    </div>
+    <Router>
+        <Routes>
+            <Route path="/" exact component={FilmTable} />
+            <Route path="/film/:id" component={FilmView} />
+        </Routes>
+    </Router>
   );
 };
 

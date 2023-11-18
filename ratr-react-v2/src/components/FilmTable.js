@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const FilmTable = () => {
   const [films, setFilms] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:8080/films").then((response) => {
+        console.log(response.data)
       setFilms(response.data);
     });
   }, []);
@@ -23,7 +25,9 @@ const FilmTable = () => {
           {
             films.map((film) => (
                 <tr key={film.id}>
-                    <td scope="row"> {film.title} </td>
+                    <td scope="row">
+                        <Link to={`/film/${film.id}`}>{film.title} </Link>
+                    </td>
                     <td> {film.director_name} </td>
                     <td> {film.release_year} </td>
                 </tr>
