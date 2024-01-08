@@ -12,6 +12,18 @@ repositories {
     mavenCentral()
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.ratr"
+            artifactId = "shared-lib"
+            version = "1.1"
+
+            from(components["java"])
+          }
+      }
+  }
+
 dependencies {
     // Use JUnit test framework.
     testImplementation("junit:junit:4.13.2")

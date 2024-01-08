@@ -16,22 +16,24 @@ java {
 
 repositories {
 	mavenCentral()
+  mavenLocal()
 }
 
 dependencies {
 	// TODO :: Add packages to GitHub
-	implementation(files("/home/jared/Documents/code/ratr/shared-lib/lib/build/libs/lib-plain.jar"))
+	//implementation(files("/home/jared/Documents/code/ratr/shared-lib/lib/build/libs/lib-plain.jar"))
+  implementation('com.ratr:shared-lib:1.1')
 
-	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.jetbrains:annotations:24.0.0'
+  implementation 'org.jetbrains:annotations:24.0.0'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
 
 	testImplementation 'org.mockito:mockito-core:5.7.0'
 
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+  providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	// AWS
