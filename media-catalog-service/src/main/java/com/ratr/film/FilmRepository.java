@@ -12,18 +12,14 @@ import java.util.UUID;
 @Transactional
 public interface FilmRepository extends JpaRepository<Film, UUID> {
 
-    @Query("SELECT f FROM Film f WHERE f.directorName = :dname")
-    List<Film> findByDirectorName(@Param("dname") String directorName);
+  @Query("SELECT f FROM Film f WHERE f.directorName = :dname")
+  List<Film> findByDirectorName(@Param("dname") String directorName);
 
-    @Query("SELECT f FROM Film f WHERE f.title = :ftitle")
-    List<Film> findFilmsByTitle(@Param("ftitle") String filmTitle);
-
-    @Query("SELECT f.id FROM Film f WHERE f.title = :ftitle AND f.directorName = :fdirector AND f.releaseYear = :freleaseyear")
-    String getFilmIdByTitleDirectorAndReleaseYear(
-            @Param("ftitle") String title,
-            @Param("fdirector") String directorName,
-            @Param("freleaseyear") int releaseYear
-    );
-
-
+  @Query("SELECT f FROM Film f WHERE f.title = :ftitle")
+  List<Film> findFilmsByTitle(@Param("ftitle") String filmTitle);
+  @Query("SELECT f.id FROM Film f WHERE f.title = :ftitle AND f.directorName = :fdirector AND f.releaseYear = :freleaseyear")
+  String getFilmIdByTitleDirectorAndReleaseYear(
+      @Param("ftitle") String title,
+      @Param("fdirector") String directorName,
+      @Param("freleaseyear") int releaseYear);
 }

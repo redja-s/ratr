@@ -18,7 +18,7 @@ PSQL_CONTAINER_NAME=ratr-psql
 echo "Building container image $PSQL_IMAGE_NAME..."
 docker build -t $PSQL_IMAGE_NAME .
 
-if [[ "$(docker ps -q -f name=$PSQL_CONTAINER_NAME)" ]]; then
+if [[ "$(docker ps -a -q -f name=$PSQL_CONTAINER_NAME)" ]]; then
 	echo
 	echo "Removing currently running PSQL container..."
 	docker rm -f $PSQL_CONTAINER_NAME
@@ -28,7 +28,10 @@ echo
 echo "Starting container $PSQL_CONTAINER_NAME with previously built image..."
 docker run -d --name $PSQL_CONTAINER_NAME -p 5432:5432 $PSQL_IMAGE_NAME
 
-sleep 4
+sleep 5
 
-echo
-echo "Database setup is done."
+if docker inspect --format "{{.State.Running}}" "$PSQL_CONTAINER_NAME" | grep -q "true"; then
+  echo "Database setup is done"
+else
+  echo "Failed to start the container"
+fi

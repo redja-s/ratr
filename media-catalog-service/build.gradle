@@ -1,8 +1,8 @@
 plugins {
-	id 'java'
-	id 'war'
-	id 'org.springframework.boot' version '3.1.5'
-	id 'io.freefair.lombok' version '8.4'
+    id 'java'
+    id 'war'
+    id 'org.springframework.boot' version '3.1.5'
+    id 'io.freefair.lombok' version '8.4'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -11,40 +11,46 @@ group = "com.js"
 version = "0.0.1-SNAPSHOT"
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
-	mavenCentral()
-  mavenLocal()
+    mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-	// TODO :: Add packages to GitHub
-	//implementation(files("/home/jared/Documents/code/ratr/shared-lib/lib/build/libs/lib-plain.jar"))
-  implementation('com.ratr:shared-lib:1.1')
+    // TODO :: Add packages to GitHub
+    //implementation(files("/home/jared/Documents/code/ratr/shared-lib/lib/build/libs/lib-plain.jar"))
+    implementation('com.ratr:shared-lib:1.1')
 
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.postgresql:postgresql'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-  implementation 'org.jetbrains:annotations:24.0.0'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.jetbrains:annotations:24.0.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
 
-	testImplementation 'org.mockito:mockito-core:5.7.0'
+    testImplementation 'org.mockito:mockito-core:5.7.0'
+    testImplementation 'junit:junit:4.13.1'
 
-  providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// AWS
-	implementation(platform("software.amazon.awssdk:bom:2.21.1"))
-	implementation('software.amazon.awssdk:s3')
+    // AWS
+    implementation(platform("software.amazon.awssdk:bom:2.21.1"))
+    implementation('software.amazon.awssdk:s3')
 
-	// Minio
-	implementation('io.minio:minio:8.5.7')
+    // Minio
+    implementation('io.minio:minio:8.5.7')
 
-	// Logging
-	implementation 'org.slf4j:slf4j-api:2.0.7'
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+
+
+    // MapStruct
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
 //	implementation 'org.apache.logging.log4j:log4j-api:2.21.0'
 //	implementation 'org.apache.logging.log4j:log4j-core:2.21.0'
@@ -52,5 +58,5 @@ dependencies {
 }
 
 tasks.test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
