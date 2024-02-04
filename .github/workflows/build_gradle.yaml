@@ -1,0 +1,35 @@
+name: Build Gradle
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      #https://github.com/actions/checkout
+      - uses: actions/checkout@v4
+
+      #https://github.com/actions/setup-java
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      #https://github.com/gradle/gradle-build-action
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
+      - name: Build shared-lib
+        run: |
+          cd shared-lib
+          ./build.sh
+
+      - name: Build media-catalog-service
+        run: |
+          cd media-catalog-service
+          ./gradlew clean build
