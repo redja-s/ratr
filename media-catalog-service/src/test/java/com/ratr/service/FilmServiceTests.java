@@ -4,7 +4,6 @@ import com.ratr.film.FilmRepository;
 import com.ratr.film.dto.FilmDto;
 import com.ratr.film.exception.FilmExistsException;
 import com.ratr.film.mapper.EntityMapper;
-import com.ratr.film.model.FilmResponse;
 import com.ratr.film.service.FilmService;
 import com.ratr.model.film.Film;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -19,27 +19,24 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FilmServiceTests {
 
+    private final EntityMapper entityMapper = EntityMapper.INSTANCE;
     @MockBean
     private FilmRepository filmRepository;
-
     @Autowired
     private FilmService filmService;
 
-    private final EntityMapper entityMapper = EntityMapper.INSTANCE;
-
     @Test
     void testGetAllFilms() {
-        Film expectedFilm = Film.builder()
-                .title("500 Days of Summer")
-                .directorName("Marc Preston Webb")
-                .releaseYear(2009)
-                .build();
+        Film expectedFilm = filmBuilder1();
 
         when(filmRepository.findAll()).thenReturn(Collections.singletonList(expectedFilm));
 
@@ -78,7 +75,6 @@ public class FilmServiceTests {
     @Test
     void testGetEmptyFilms() {
         when(filmRepository.findAll()).thenReturn(Collections.emptyList());
-
         List<FilmDto> films = filmService.getAllFilms();
 
         assertEquals(0, films.size());
@@ -86,18 +82,51 @@ public class FilmServiceTests {
 
     @Test
     void testStoreFilms() throws FilmExistsException {
-        FilmDto filmToSave = FilmDto.builder()
-                .title("Title 1")
-                .releaseYear(1994)
-                .directorName("John Doe")
-                .build();
+        FilmDto filmToSave = filmDtoBuilder();
 
         Film film = entityMapper.mapDtoToEntity(filmToSave);
-        when(filmRepository.save(film)).thenReturn(film);
+        when(filmRepository.saveAndFlush(any(Film.class))).thenReturn(film);
 
         FilmDto response = filmService.storeFilm(filmToSave);
         assertEquals(filmToSave.getDirectorName(), response.getDirectorName());
         assertEquals(filmToSave.getReleaseYear(), response.getReleaseYear());
         assertEquals(filmToSave.getTitle(), response.getTitle());
+        assertNotNull(response.getId());
+    }
+
+    @Test
+    void testStoreDuplicateFilm() {
+        FilmDto filmToSave = filmDtoBuilder();
+        when(filmRepository.saveAndFlush(any(Film.class))).thenThrow(DataIntegrityViolationException.class);
+
+        assertThrows(FilmExistsException.class, () -> {
+            filmService.storeFilm(filmToSave);
+        });
+    }
+
+    @Test
+    void testUpdateFilm() {
+        FilmDto filmToSave = filmDtoBuilder();
+        when(filmRepository.save(any(Film.class))).thenThrow(DataIntegrityViolationException.class);
+
+        assertThrows(FilmExistsException.class, () -> {
+            filmService.storeFilm(filmToSave);
+        });
+    }
+
+    private FilmDto filmDtoBuilder() {
+        return FilmDto.builder()
+                .title("Title 1")
+                .releaseYear(1994)
+                .directorName("John Doe")
+                .build();
+    }
+
+    private Film filmBuilder1() {
+        return Film.builder()
+                .title("500 Days of Summer")
+                .directorName("Marc Preston Webb")
+                .releaseYear(2009)
+                .build();
     }
 }

@@ -24,14 +24,15 @@ public class EntityMapperTests {
                 .title("Sunbeam")
                 .id(UUID.randomUUID())
                 .description("A description of the film")
+                .coverImagePath("sunbeam.png")
                 .build();
 
         FilmDto mapped = entityMapper.mapEntityToDto(filmToConvert);
-        log.info("Mapped to object " + mapped);
 
         assertEquals(filmToConvert.getReleaseYear(), mapped.getReleaseYear());
         assertEquals(filmToConvert.getTitle(), mapped.getTitle());
         assertEquals(filmToConvert.getDirectorName(), mapped.getDirectorName());
+        assertEquals(filmToConvert.getDescription(), mapped.getDescription());
     }
 
     @Test
@@ -39,6 +40,8 @@ public class EntityMapperTests {
         FilmDto filmToConvert = FilmDto.builder()
                 .releaseYear(1995)
                 .directorName("John Doe")
+                .description("A description of the film")
+                .id(UUID.randomUUID())
                 .title("Sunbeam")
                 .build();
 
@@ -47,6 +50,7 @@ public class EntityMapperTests {
         assertEquals(filmToConvert.getReleaseYear(), mapped.getReleaseYear());
         assertEquals(filmToConvert.getTitle(), mapped.getTitle());
         assertEquals(filmToConvert.getDirectorName(), mapped.getDirectorName());
-        assertNull(mapped.getId());
+        assertEquals(filmToConvert.getDescription(), mapped.getDescription());
+        assertEquals(filmToConvert.getId(), mapped.getId());
     }
 }

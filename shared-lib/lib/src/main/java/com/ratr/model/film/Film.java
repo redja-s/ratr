@@ -3,6 +3,7 @@ package com.ratr.model.film;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -23,7 +24,7 @@ import java.util.UUID;
 public class Film {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "title")
@@ -35,7 +36,7 @@ public class Film {
     private String directorName;
 
     @Column(name = "release_year")
-    @NotBlank(message = "Release year is mandatory")
+    @NotNull(message = "Release year is mandatory")
     private int releaseYear;
 
     @NotBlank(message = "Description is mandatory")
