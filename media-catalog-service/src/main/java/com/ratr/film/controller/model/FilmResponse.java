@@ -1,4 +1,4 @@
-package com.ratr.film.model;
+package com.ratr.film.controller.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

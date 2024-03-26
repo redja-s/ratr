@@ -7,11 +7,6 @@ if [[ ! (-f "Dockerfile") ]]; then
 	exit
 fi
 
-if [[ ! (-d "scripts/") ]]; then
-	echo "No 'scripts/' directory found in working directory"
-	exit
-fi
-
 PSQL_IMAGE_NAME=ratr-psql-local
 PSQL_CONTAINER_NAME=ratr-psql
 

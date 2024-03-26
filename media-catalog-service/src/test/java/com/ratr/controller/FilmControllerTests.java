@@ -1,37 +1,35 @@
 package com.ratr.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ratr.film.FilmController;
-import com.ratr.film.FilmRepository;
 import com.ratr.film.dto.FilmDto;
 import com.ratr.film.exception.FilmExistsException;
 import com.ratr.film.exception.model.GenericErrorResponse;
 import com.ratr.film.mapper.EntityMapper;
 import com.ratr.film.service.FilmService;
-import org.junit.jupiter.api.BeforeEach;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,8 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class FilmControllerTests {
 
     private final EntityMapper entityMapper = EntityMapper.INSTANCE;
-    @MockBean
-    private FilmRepository filmRepository;
+
     @MockBean
     private FilmService filmService;
     @Autowired
@@ -67,8 +64,10 @@ public class FilmControllerTests {
     @Test
     void testStoreFilm() throws Exception {
         FilmDto filmToStore = filmDtoObject();
+        FilmDto filmWithId = filmDtoObject();
+        filmWithId.setId(UUID.randomUUID());
 
-        when(filmService.storeFilm(filmToStore)).thenReturn(filmToStore);
+        when(filmService.storeFilm(filmToStore)).thenReturn(filmWithId);
 
         MvcResult response = mockMvc.perform(post("/films")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -83,8 +82,9 @@ public class FilmControllerTests {
         assertNotNull(dto.getId());
     }
 
+    @SneakyThrows
     @Test
-    void testStoreDuplicateFilmThrows409() throws Exception {
+    void testStoreDuplicateFilmThrows409() {
         FilmDto filmToStore = filmDtoObject();
         when(filmService.storeFilm(filmToStore)).thenThrow(FilmExistsException.class);
 
@@ -98,6 +98,15 @@ public class FilmControllerTests {
 
         GenericErrorResponse errorBody = objectMapper.readValue(response.getResponse().getContentAsString(), GenericErrorResponse.class);
         assertEquals("Film exists with the given title, director and release year", errorBody.getMessage());
+    }
+
+    @Test
+    void testDeleteFilm() throws Exception {
+        final String idToDelete = UUID.randomUUID().toString();
+        doNothing().when(filmService).removeFilmById(idToDelete);
+
+        mockMvc.perform(delete("/films/{id}", idToDelete)
+                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
     }
 
     private FilmDto filmDtoObject() {
