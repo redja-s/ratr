@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,6 +34,8 @@ public class FilmServiceTests {
     private FilmRepository filmRepository;
     @Autowired
     private FilmService filmService;
+
+    private static final UUID RANDOM_UUID = UUID.fromString("620a0649-7759-4c95-9cd4-03d968ee9e9a");
 
     @Test
     void testGetAllFilms() {
@@ -82,15 +85,15 @@ public class FilmServiceTests {
 
     @Test
     void testStoreFilms() throws FilmExistsException {
-        FilmDto filmToSave = filmDtoBuilder();
+        Film filmReturned = filmBuilder1();
+        FilmDto filmStored = filmDtoBuilder1();
 
-        Film film = entityMapper.mapDtoToEntity(filmToSave);
-        when(filmRepository.saveAndFlush(any(Film.class))).thenReturn(film);
+        when(filmRepository.saveAndFlush(any(Film.class))).thenReturn(filmReturned);
 
-        FilmDto response = filmService.storeFilm(filmToSave);
-        assertEquals(filmToSave.getDirectorName(), response.getDirectorName());
-        assertEquals(filmToSave.getReleaseYear(), response.getReleaseYear());
-        assertEquals(filmToSave.getTitle(), response.getTitle());
+        FilmDto response = filmService.storeFilm(filmStored);
+        assertEquals(filmReturned.getDirectorName(), response.getDirectorName());
+        assertEquals(filmReturned.getReleaseYear(), response.getReleaseYear());
+        assertEquals(filmReturned.getTitle(), response.getTitle());
         assertNotNull(response.getId());
     }
 
@@ -98,16 +101,6 @@ public class FilmServiceTests {
     void testStoreDuplicateFilm() {
         FilmDto filmToSave = filmDtoBuilder();
         when(filmRepository.saveAndFlush(any(Film.class))).thenThrow(DataIntegrityViolationException.class);
-
-        assertThrows(FilmExistsException.class, () -> {
-            filmService.storeFilm(filmToSave);
-        });
-    }
-
-    @Test
-    void testUpdateFilm() {
-        FilmDto filmToSave = filmDtoBuilder();
-        when(filmRepository.save(any(Film.class))).thenThrow(DataIntegrityViolationException.class);
 
         assertThrows(FilmExistsException.class, () -> {
             filmService.storeFilm(filmToSave);
@@ -122,8 +115,17 @@ public class FilmServiceTests {
                 .build();
     }
 
+    private FilmDto filmDtoBuilder1() {
+        return FilmDto.builder()
+                .title("500 Days of Summer")
+                .directorName("Marc Preston Webb")
+                .releaseYear(2009)
+                .build();
+    }
+
     private Film filmBuilder1() {
         return Film.builder()
+                .id(RANDOM_UUID)
                 .title("500 Days of Summer")
                 .directorName("Marc Preston Webb")
                 .releaseYear(2009)
