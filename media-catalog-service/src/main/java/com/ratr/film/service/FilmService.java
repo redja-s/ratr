@@ -3,6 +3,7 @@ package com.ratr.film.service;
 import com.ratr.film.FilmRepository;
 import com.ratr.film.dto.FilmDto;
 import com.ratr.film.exception.FilmExistsException;
+import com.ratr.film.exception.FilmNotFoundException;
 import com.ratr.film.mapper.EntityMapper;
 import com.ratr.model.film.Film;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,21 @@ public class FilmService {
         this.filmRepository = filmRepository;
     }
 
+    public FilmDto updateFilmById(String filmId, FilmDto filmDto) throws FilmNotFoundException {
+        Film filmToUpdate = filmRepository.findById(UUID.fromString(filmId))
+                .orElseThrow(FilmNotFoundException::new);
+
+        filmToUpdate.setTitle(filmDto.getTitle());
+        filmToUpdate.setDescription(filmDto.getDescription());
+        filmToUpdate.setCoverImagePath(filmDto.getCoverImagePath());
+        filmToUpdate.setDirectorName(filmDto.getDirectorName());
+        filmToUpdate.setReleaseYear(filmDto.getReleaseYear());
+
+        Film updated = filmRepository.saveAndFlush(filmToUpdate);
+
+        return entityMapper.mapEntityToDto(updated);
+    }
+
     public List<FilmDto> getAllFilms() {
         List<Film> allFilms = filmRepository.findAll();
         return allFilms.stream().map(entityMapper::mapEntityToDto).toList();
@@ -38,7 +54,7 @@ public class FilmService {
     public FilmDto storeFilm(FilmDto filmDto) throws FilmExistsException {
         try {
             Film savedFilm = filmRepository.saveAndFlush(entityMapper.mapDtoToEntity(filmDto));
-            log.info("returned " + savedFilm);
+            log.info("Returned " + savedFilm);
             return entityMapper.mapEntityToDto(savedFilm);
         } catch (DataIntegrityViolationException e) {
             throw new FilmExistsException();

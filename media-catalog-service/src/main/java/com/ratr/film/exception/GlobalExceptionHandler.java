@@ -19,4 +19,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                         .build()
         );
     }
+
+    @ExceptionHandler(FilmNotFoundException.class)
+    protected ResponseEntity<GenericErrorResponse> handleFilmNotFoundException(FilmNotFoundException error) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                GenericErrorResponse.builder()
+                        .message("Film not found")
+                        .exception(FilmNotFoundException.class.getSimpleName())
+                        .build()
+        );
+    }
 }

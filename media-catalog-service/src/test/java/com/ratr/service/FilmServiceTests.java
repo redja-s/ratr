@@ -3,6 +3,7 @@ package com.ratr.service;
 import com.ratr.film.FilmRepository;
 import com.ratr.film.dto.FilmDto;
 import com.ratr.film.exception.FilmExistsException;
+import com.ratr.film.exception.FilmNotFoundException;
 import com.ratr.film.mapper.EntityMapper;
 import com.ratr.film.service.FilmService;
 import com.ratr.model.film.Film;
@@ -17,12 +18,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -105,6 +109,25 @@ public class FilmServiceTests {
         assertThrows(FilmExistsException.class, () -> {
             filmService.storeFilm(filmToSave);
         });
+    }
+
+    @Test
+    void testUpdateFilmById() throws FilmNotFoundException {
+        final Film filmToUpdate = filmBuilder1();
+
+        final FilmDto request = filmDtoBuilder1();
+        request.setTitle("Updated Title");
+
+        when(filmRepository.findById(RANDOM_UUID)).thenReturn(Optional.of(filmToUpdate));
+
+        filmToUpdate.setTitle("Updated Title");
+        when(filmRepository.saveAndFlush(any(Film.class))).thenReturn(filmToUpdate);
+
+        FilmDto response = filmService.updateFilmById(String.valueOf(RANDOM_UUID), request);
+
+        verify(filmRepository).saveAndFlush(any(Film.class));
+
+        assertEquals(response.getTitle(), request.getTitle());
     }
 
     private FilmDto filmDtoBuilder() {

@@ -31,6 +31,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -107,6 +108,25 @@ public class FilmControllerTests {
 
         mockMvc.perform(delete("/films/{id}", idToDelete)
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void testUpdateFilm() throws Exception {
+        final String idToUpdate = UUID.randomUUID().toString();
+        final FilmDto filmRequest = filmDtoObject();
+        filmRequest.setId(UUID.fromString(idToUpdate));
+        when(filmService.updateFilmById(idToUpdate, filmRequest)).thenReturn(filmRequest);
+
+        final MvcResult response = mockMvc.perform(put("/films/{id}", idToUpdate)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(filmRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        FilmDto dto = objectMapper.readValue(response.getResponse().getContentAsString(), FilmDto.class);
+        assertEquals(filmRequest.getTitle(), dto.getTitle());
+        assertEquals(filmRequest.getDescription(), dto.getDescription());
+        assertEquals(filmRequest.getDirectorName(), dto.getDirectorName());
     }
 
     private FilmDto filmDtoObject() {
