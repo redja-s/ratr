@@ -10,7 +10,7 @@ const ListFilms = () => {
     <Router>
         <Routes>
             <Route path="/" exact component={FilmTable} />
-            <Route path="/film/:id" component={FilmView} />
+//            <Route path="/film/:id" component={FilmView} />
         </Routes>
     </Router>
   );

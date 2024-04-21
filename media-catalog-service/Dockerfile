@@ -1,6 +1,8 @@
-FROM amazoncorretto:8-alpine3.17-jdk
+FROM amazoncorretto:17-alpine3.18-jdk
 
-COPY . /app
-WORKDIR /app
+VOLUME /tmp
+COPY build/libs/*.war app.war
 
 EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/app.war"]
