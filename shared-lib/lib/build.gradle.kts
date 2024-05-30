@@ -22,7 +22,7 @@ publishing {
             from(components["java"])
           }
       }
-  }
+}
 
 dependencies {
     // Use JUnit test framework.

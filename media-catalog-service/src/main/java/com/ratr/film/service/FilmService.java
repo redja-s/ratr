@@ -1,67 +1,71 @@
 package com.ratr.film.service;
 
+import java.util.List;
+import java.util.UUID;
+import com.google.common.base.Strings;
 import com.ratr.film.FilmRepository;
 import com.ratr.film.dto.FilmDto;
 import com.ratr.film.exception.FilmExistsException;
 import com.ratr.film.exception.FilmNotFoundException;
 import com.ratr.film.mapper.EntityMapper;
 import com.ratr.model.film.Film;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 public class FilmService {
 
-    private final FilmRepository filmRepository;
-    private final EntityMapper entityMapper = EntityMapper.INSTANCE;
+	private final FilmRepository filmRepository;
+	private final EntityMapper entityMapper = EntityMapper.INSTANCE;
 
-    @Autowired
-    public FilmService(FilmRepository filmRepository) {
-        this.filmRepository = filmRepository;
-    }
+	@Autowired
+	public FilmService(FilmRepository filmRepository) {
+		this.filmRepository = filmRepository;
+	}
 
-    public FilmDto updateFilmById(String filmId, FilmDto filmDto) throws FilmNotFoundException {
-        Film filmToUpdate = filmRepository.findById(UUID.fromString(filmId))
-                .orElseThrow(FilmNotFoundException::new);
+	public FilmDto updateFilmById(String filmId, FilmDto filmDto) throws FilmNotFoundException {
+		Film filmToUpdate = filmRepository.findById(UUID.fromString(filmId))
+			.orElseThrow(FilmNotFoundException::new);
 
-        filmToUpdate.setTitle(filmDto.getTitle());
-        filmToUpdate.setDescription(filmDto.getDescription());
-        filmToUpdate.setCoverImagePath(filmDto.getCoverImagePath());
-        filmToUpdate.setDirectorName(filmDto.getDirectorName());
-        filmToUpdate.setReleaseYear(filmDto.getReleaseYear());
+		filmToUpdate.setTitle(filmDto.getTitle());
+		filmToUpdate.setDescription(filmDto.getDescription());
+		filmToUpdate.setCoverImagePath(filmDto.getCoverImagePath());
+		filmToUpdate.setDirectorName(filmDto.getDirectorName());
+		filmToUpdate.setReleaseYear(filmDto.getReleaseYear());
 
-        Film updated = filmRepository.saveAndFlush(filmToUpdate);
+		Film updated = filmRepository.saveAndFlush(filmToUpdate);
 
-        return entityMapper.mapEntityToDto(updated);
-    }
+		return entityMapper.mapEntityToDto(updated);
+	}
 
-    public List<FilmDto> getAllFilms() {
-        List<Film> allFilms = filmRepository.findAll();
-        return allFilms.stream().map(entityMapper::mapEntityToDto).toList();
-    }
+	public List<FilmDto> getAllFilms() {
+		List<Film> allFilms = filmRepository.findAll();
+		return allFilms.stream().map(entityMapper::mapEntityToDto).toList();
+	}
 
-    public List<FilmDto> getFilmByTitle(String filmTitle) {
-        List<Film> films = filmRepository.findFilmsByTitle(filmTitle);
-        return films.stream().map(entityMapper::mapEntityToDto).toList();
-    }
+	public List<FilmDto> getFilmByTitle(String filmTitle) {
+		List<Film> films = filmRepository.findFilmsByTitle(filmTitle);
+		return films.stream().map(entityMapper::mapEntityToDto).toList();
+	}
 
-    public FilmDto storeFilm(FilmDto filmDto) throws FilmExistsException {
-        try {
-            Film savedFilm = filmRepository.saveAndFlush(entityMapper.mapDtoToEntity(filmDto));
-            log.info("Returned " + savedFilm);
-            return entityMapper.mapEntityToDto(savedFilm);
-        } catch (DataIntegrityViolationException e) {
-            throw new FilmExistsException();
-        }
-    }
+	public FilmDto storeFilm(FilmDto filmDto) throws FilmExistsException {
+		if (Strings.isNullOrEmpty(filmDto.getDescription())) {
+			filmDto.setDescription("Please update the description.");
+		}
 
-    public void removeFilmById(String filmId) {
-        filmRepository.deleteById(UUID.fromString(filmId));
-    }
+		try {
+			Film savedFilm = filmRepository.saveAndFlush(entityMapper.mapDtoToEntity(filmDto));
+			log.info("Returned " + savedFilm);
+			return entityMapper.mapEntityToDto(savedFilm);
+		} catch (DataIntegrityViolationException e) {
+			throw new FilmExistsException();
+		}
+	}
+
+	public void removeFilmById(String filmId) {
+		filmRepository.deleteById(UUID.fromString(filmId));
+	}
 }

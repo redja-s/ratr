@@ -7,9 +7,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface EntityMapper {
-    EntityMapper INSTANCE = Mappers.getMapper(EntityMapper.class);
+	EntityMapper INSTANCE = Mappers.getMapper(EntityMapper.class);
 
-    Film mapDtoToEntity(FilmDto filmDto);
+	Film mapDtoToEntity(FilmDto filmDto);
 
-    FilmDto mapEntityToDto(Film film);
+	FilmDto mapEntityToDto(Film film);
 }

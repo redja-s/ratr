@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GenericErrorResponse {
-    private String exception;
-    private String message;
+	private String exception;
+	private String message;
 }

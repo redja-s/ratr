@@ -11,10 +11,9 @@ Set up the database connection parameters in `application.properties`
 - DB Password: `password`
 
 ## Usage
-Run:
 
-```shell
-docker compose up --build -d
-```
+1. `./setup.sh`
 
-Ensure you use `--build` so any changes to SQL scripts are always taken into effect. Running this flag ensure the image is rebuilt
+## Issues
+
+- [Mullvad VPN] - Check if local network sharing is enabled. If not, this will disallow any attempts for e.g. localhost
