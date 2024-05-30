@@ -10,13 +10,13 @@ const Navbar = () => {
       </div>
       <ul className="flex justify-end">
         <li className="mr-6 font-bold text-white hover:text-gray-400">
-          <NavLink to="/">home</NavLink>
+          <a href="/">home</a>
         </li>
         <li className="mr-6 font-bold text-white hover:text-gray-400">
-          <NavLink to="/films">films</NavLink>
+          <a href="/films">films</a>
         </li>
         <li className="mr-6 font-bold text-white hover:text-gray-400">
-          <NavLink to="/login">login</NavLink>
+          <a href="/login">login</a>
         </li>
       </ul>
     </nav>

@@ -3,7 +3,10 @@ import Navbar from './components/Navbar.jsx'
 
 function App() {
   return (
-    <Navbar />
+    <div>
+      <Navbar />
+      Hello World!
+    </div>
   );
 }
 
