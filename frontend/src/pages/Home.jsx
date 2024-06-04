@@ -1,11 +1,12 @@
 import Navbar from "../components/Navbar.jsx";
+import Banner from "../components/Banner.jsx";
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Navbar />
-      HelloWorld!
-    </div>
+      <Banner />
+    </>
   );
 }
 

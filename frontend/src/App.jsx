@@ -1,5 +1,5 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Home from './pages/Home.jsx'
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Home from "./pages/Home.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import ListFilms from "./pages/ListFilms.jsx";
 
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div>
+    <div className="bg-yellow-400 dark:bg-black">
       <RouterProvider router={router} />
     </div>
   );

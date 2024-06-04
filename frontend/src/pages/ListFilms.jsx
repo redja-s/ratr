@@ -20,6 +20,7 @@ const ListFilms = () => {
           films.map((film) => (
             <li key={film.id}>
               <h2>{film.title}</h2>
+              <img src={film.cover_image_path} alt={film.title} />
             </li>
           ))
         }
