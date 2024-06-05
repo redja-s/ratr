@@ -46,7 +46,7 @@ public class FilmController {
 
 	@DeleteMapping("/{filmIdToDelete}")
 	public ResponseEntity<Void> deleteFilmByID(@PathVariable String filmIdToDelete) {
-		log.info(String.format("Deleting film [%s]", filmIdToDelete));
+		log.info("Deleting film {%s}", filmIdToDelete);
 		filmService.removeFilmById(filmIdToDelete);
 		return ResponseEntity.noContent().build();
 	}
@@ -54,14 +54,14 @@ public class FilmController {
 	@PutMapping("/{filmId}")
 	public ResponseEntity<FilmDto> updateFilmById(@PathVariable String filmId,
 		@RequestBody FilmDto filmDto) throws FilmNotFoundException {
-		log.info(String.format("Updating film [%s]", filmId));
+		log.info("Updating film {%s}", filmId);
 		final var updatedFilm = filmService.updateFilmById(filmId, filmDto);
 		return ResponseEntity.ok(updatedFilm);
 	}
 
 	@GetMapping("/{numOfFilms}")
 	public ResponseEntity<List<FilmDto>> getTopNFilms(@PathVariable int numOfFilms) {
-		log.info("Retrieving top [] films", numOfFilms);
+		log.info("Retrieving top {} films", numOfFilms);
 		final var allFilms = filmService.getAllFilms();
 		return ResponseEntity.ok(allFilms.stream().limit(numOfFilms).toList());
 	}
