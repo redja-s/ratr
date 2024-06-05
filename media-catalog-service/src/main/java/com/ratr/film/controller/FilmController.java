@@ -58,4 +58,11 @@ public class FilmController {
 		final var updatedFilm = filmService.updateFilmById(filmId, filmDto);
 		return ResponseEntity.ok(updatedFilm);
 	}
+
+	@GetMapping("/{numOfFilms}")
+	public ResponseEntity<List<FilmDto>> getTopNFilms(@PathVariable int numOfFilms) {
+		log.info("Retrieving top [] films", numOfFilms);
+		final var allFilms = filmService.getAllFilms();
+		return ResponseEntity.ok(allFilms.stream().limit(numOfFilms).toList());
+	}
 }
