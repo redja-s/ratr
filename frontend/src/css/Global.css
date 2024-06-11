@@ -1,0 +1,15 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.page-base {
+  @apply w-[950px];
+  @apply bg-white;
+  @apply flex;
+  @apply flex-row;
+  @apply flex-wrap;
+  @apply items-center;
+  @apply justify-center;
+  @apply mx-auto;
+  @apply mt-0;
+}

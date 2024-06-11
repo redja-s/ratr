@@ -1,0 +1,14 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.navbar-list-item {
+  @apply hover:bg-gray-400;
+  @apply dark:hover:bg-gray-400;
+  @apply w-8;
+  @apply h-8;
+  @apply items-center;
+  @apply justify-center;
+  @apply mx-auto;
+  @apply flex;
+}
