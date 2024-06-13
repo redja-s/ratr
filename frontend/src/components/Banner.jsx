@@ -3,8 +3,8 @@ const Banner = () => {
   const bannerSubtext = "ratr provides an all-in-one solution for tracking everything you watch!"
 
   return (
-    <div className="h-1/2 text-center my-5">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">{bannerHeader}</h1>
+    <div className="text-center">
+      <h1 className="mb-6 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">{bannerHeader}</h1>
       <p className="mb-6 text-lg font-normal text-black lg:text-xl sm:px-16 xl:px-48 dark:text-white">
         {bannerSubtext}
       </p>

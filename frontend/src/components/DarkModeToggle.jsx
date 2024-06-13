@@ -12,8 +12,8 @@ const DarkModeToggle = () => {
 
   return (
     <button onClick={() => darkModeHandler()}>
-      {darkMode && <RiSunFill />}
-      {!darkMode && <RiMoonFill />}
+      {darkMode && <RiSunFill size={20} />}
+      {!darkMode && <RiMoonFill size={20} />}
     </button>
   )
 }

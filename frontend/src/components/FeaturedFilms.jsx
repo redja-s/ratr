@@ -9,9 +9,9 @@ const FeaturedFilms = () => {
   const createFilmCard = function card(listOfFilms) {
     return (
       <div className="text-center items-center">
-        <ul className="justify-content-between">
+        <ul className="flex justify-content-between">
           {listOfFilms.map((film) => (
-            <li key={film.id} className="w-1/7">
+            <li key={film.id} className="flex-1 w-1/5">
               {film.cover_image_path == null ? (
                 <img className="featured-films-list-item" src={NoImage} alt={film.title} />
               ) : (

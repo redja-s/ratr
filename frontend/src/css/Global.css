@@ -1,10 +1,8 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 .page-base {
   @apply w-[950px];
-  @apply bg-white;
+  @apply h-[1500px];
+  @apply bg-gray-50;
+  @apply dark:bg-gray-900;
   @apply flex;
   @apply flex-row;
   @apply flex-wrap;
