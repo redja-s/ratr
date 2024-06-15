@@ -1,19 +1,43 @@
+import "../css/Banner.css";
+import { useEffect, useRef, useState } from "react";
+
 const Banner = () => {
-  const bannerHeader = "Track ratings for films!";
-  const bannerSubtext = "ratr provides an all-in-one solution for tracking everything you watch!"
+  const bannerHeader1 = "Track all the films you watch";
+  const bannerHeader2 = "Tell your friends about them";
+
+  const bannerSubtext = "ratr is the platform for sharing media you love"
+
+  const buttonText = "Get started - it's free!"
+
+  const bannerRef = useRef(null);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = 'https://miro.medium.com/v2/resize:fit:1400/1*0RF4HabtzYE_TyjCaNVh5g.jpeg';
+
+    img.onload = () => {
+      if (bannerRef.current) {
+        bannerRef.current.style.height = `${img.height}px`;
+      }
+    };
+  }, []);
 
   return (
-    <div className="text-center">
-      <h1 className="mb-6 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">{bannerHeader}</h1>
-      <p className="mb-6 text-lg font-normal text-black lg:text-xl sm:px-16 xl:px-48 dark:text-white">
-        {bannerSubtext}
-      </p>
-      <a href="/login" className="font-extrabold inline-flex items-center justify-center px-5 py-3 text-base text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
-        Create Account
-        <svg className="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-        </svg>
-      </a>
+    <div ref={bannerRef} className="banner justify-center flex border border-red-500 p-0">
+      <div className="border border-red-500 text-center text-white">
+        <h1 className="font-extrabold text-2xl mb-6">
+          <p className="py-1">{bannerHeader1}</p>
+          <p className="py-1">{bannerHeader2}</p>
+        </h1>
+        <div className="mb-6">
+          <a href="/login" className="bg-green-600 rounded-lg p-1 hover:bg-green-700">
+            {buttonText}
+          </a>
+        </div>
+        <div>
+          <p className="text-gray-400">{bannerSubtext}</p>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,13 +1,13 @@
-.page-base {
+page-base {
   @apply w-[950px];
-  @apply h-[1500px];
-  @apply bg-gray-50;
-  @apply dark:bg-gray-900;
   @apply flex;
-  @apply flex-row;
   @apply flex-wrap;
   @apply items-center;
   @apply justify-center;
   @apply mx-auto;
-  @apply mt-0;
+}
+
+.page-base>* {
+  @apply py-10;
+  @apply my-10;
 }
