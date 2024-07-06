@@ -40,5 +40,4 @@ bin/
 ### VS Code ###
 **/.vscode/
 
-workspace/
 kong/

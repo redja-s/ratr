@@ -3,7 +3,8 @@
   @apply h-full;
   @apply w-full;
   @apply justify-center;
-  @apply m-auto;
   @apply flex;
   @apply px-4;
+  @apply border;
+  @apply border-red-500;
 }

@@ -4,7 +4,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.flywaydb:flyway-database-postgresql:10.10.0'
+        classpath("org.postgresql:postgresql:42.7.2")
+        classpath 'org.flywaydb:flyway-database-postgresql:10.12.0'
     }
 }
 
@@ -36,10 +37,10 @@ dependencies {
 
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-    implementation('org.postgresql:postgresql:42.5.2')
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation('org.jetbrains:annotations:24.0.0')
     implementation('com.fasterxml.jackson.core:jackson-databind:2.15.3')
+    implementation('org.springframework.kafka:spring-kafka')
 
     testImplementation 'org.mockito:mockito-core:5.7.0'
     testImplementation 'junit:junit:4.13.1'
@@ -71,7 +72,7 @@ tasks.test {
 
 //https://documentation.red-gate.com/fd/parameters-224919673.html
 flyway {
-    url = 'jdbc:postgresql://localhost:5432/postgres'
+    url = flywayUrl
     user = 'user'
     password = 'password'
 }

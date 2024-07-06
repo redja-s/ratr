@@ -1,8 +1,6 @@
-import RatrLogo from '../logo.svg';
-import { NavLink } from 'react-router-dom';
+import RatrLogo from "../logo.svg";
+import { NavLink } from "react-router-dom";
 import "../css/Navbar.css";
-import { IoHome } from "react-icons/io5";
-import { IoFilm } from "react-icons/io5";
 
 const Navbar = () => {
   return (
@@ -10,20 +8,14 @@ const Navbar = () => {
       <div className="flex items-center flex-wrap py-4 pl-6">
         <a href="/" className="flex items-center flex-wrap pr-4 space-x-2">
           <img src={RatrLogo} className="h-8" alt="ratr" />
-          <span>
-            ratr
-          </span>
+          <span>ratr</span>
         </a>
         <ul className="flex pl-5 items-center space-x-6 border-l border-slate-200">
           <li className="navbar-list-item">
-            <NavLink to="/">
-              Home
-            </NavLink>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li className="navbar-list-item">
-            <NavLink to="/films">
-              Films
-            </NavLink>
+            <NavLink to="/films">Films</NavLink>
           </li>
           <li className="navbar-list-item">
             <NavLink to="/login" className="p-1 border border-white">

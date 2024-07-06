@@ -1,16 +1,11 @@
 .banner {
   background: url('https://image.tmdb.org/t/p/original/uLhWh1pggjIiQ1DpL0DvaIgERQR.jpg');
-  /* background-size: contain; */
-  /* background-repeat: no-repeat; */
-  /* width: 100%; */
-  /* display: flex; */
   @apply flex;
   @apply justify-center;
   @apply items-center;
   @apply bg-contain;
   @apply bg-no-repeat;
   @apply bg-center;
-  @apply w-[950px];
   @apply mx-auto;
 }
 

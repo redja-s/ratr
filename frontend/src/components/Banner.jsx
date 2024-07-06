@@ -4,11 +4,8 @@ import { useEffect, useRef, useState } from "react";
 const Banner = () => {
   const bannerHeader1 = "Track all the films you watch";
   const bannerHeader2 = "Tell your friends about them";
-
   const bannerSubtext = "ratr is the platform for sharing media you love"
-
   const buttonText = "Get started - it's free!"
-
   const bannerRef = useRef(null);
 
   useEffect(() => {

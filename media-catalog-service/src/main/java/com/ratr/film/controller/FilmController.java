@@ -1,10 +1,12 @@
 package com.ratr.film.controller;
 
-import java.util.List;
 import com.ratr.film.dto.FilmDto;
 import com.ratr.film.exception.FilmExistsException;
 import com.ratr.film.exception.FilmNotFoundException;
 import com.ratr.film.service.FilmService;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Validated
 public class FilmController {
-
 	private final FilmService filmService;
 
 	@GetMapping
